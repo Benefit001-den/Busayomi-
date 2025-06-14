@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>For Busayomi 💖</title>
   <style>
     * {
@@ -28,8 +28,8 @@
       background: #fff;
       border-radius: 10px;
       box-shadow: 0 0 20px rgba(0,0,0,0.2);
-      overflow: hidden;
       position: relative;
+      perspective: 1000px;
     }
 
     .page {
@@ -37,8 +37,6 @@
       width: 100%;
       height: 100%;
       padding: 40px 20px;
-      transition: transform 0.8s ease;
-      transform-origin: left center;
       background: #fff;
       color: #a3005b;
       display: flex;
@@ -46,21 +44,29 @@
       justify-content: center;
       text-align: center;
       font-size: 1.2em;
+      border-radius: 10px;
+      backface-visibility: hidden;
+      transition: transform 0.8s ease;
     }
 
-    .page:nth-child(1) {
-      z-index: 3;
+    #front {
       background-color: #fff0f8;
+      z-index: 2;
     }
 
-    .page:nth-child(2) {
-      z-index: 2;
+    #back {
       background-color: #ffeaf4;
       transform: rotateY(180deg);
+      z-index: 1;
     }
 
-    .page.flipped {
+    .book.flipped #front {
       transform: rotateY(-180deg);
+    }
+
+    .book.flipped #back {
+      transform: rotateY(0);
+      z-index: 3;
     }
 
     .nav-btn {
@@ -82,6 +88,50 @@
       background-color: #e0559e;
     }
 
+    .popup {
+      position: fixed;
+      top: 28%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff5fb;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      display: none;
+      z-index: 999;
+      font-size: 1.2em;
+    }
+
+    .popup.show {
+      display: block;
+      animation: pop 0.5s ease-out;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .final-note {
+      margin-top: 20px;
+      font-size: 1em;
+      color: #444;
+      font-style: italic;
+      animation: fadeIn 2s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
     audio {
       display: none;
     }
@@ -89,26 +139,51 @@
 </head>
 <body>
 
-  <div class="book">
-    <div class="page" id="page1">
-      <h2>Busayomi 💕</h2>
+  <div class="book" id="book">
+    <div class="page" id="front">
+      <h2>Busayomi ❤️🙈</h2>
       <p>I love you so so much, but your head just dey touch ground sometimes 😂😂</p>
-      <button class="nav-btn" onclick="flipPage()">Flip to Next</button>
+      <button class="nav-btn" onclick="flipBook(true)">Flip to Next</button>
     </div>
 
-    <div class="page" id="page2">
-      <h2>One more thing 😄</h2>
-      <p>But that your head wey shit ground nah me go help u fix am — no worry, once I get money: wig, bag, iPad — anything you want, I go get am for you 💝</p>
+    <div class="page" id="back">
+      <h2>One more thing ❤️</h2>
+      <p>But that your head wey shit ground 🙈 nah me go help u fix am — no worry, once I get money: wig, bag, iPad — anything you want, I go get am for you 💝💼📱</p>
+      <div class="final-note">I know you are leaving this page soon... please don’t leave me 🥺❤️</div>
+      <button class="nav-btn" onclick="flipBook(false)">Flip Back</button>
     </div>
   </div>
 
-  <audio autoplay loop>
+  <div class="popup" id="popup">
+    🎉 Surprise! You’re my favorite headache and my sweetest peace. Love you Busayomi ❤️😘🙈
+  </div>
+
+  <audio autoplay loop id="bg-music">
     <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3" />
   </audio>
 
+  <audio id="flip-sound">
+    <source src="https://assets.mixkit.co/active_storage/sfx/2046/2046-preview.mp3" type="audio/mp3">
+  </audio>
+
   <script>
-    function flipPage() {
-      document.getElementById('page1').classList.add('flipped');
+    const book = document.getElementById('book');
+    const popup = document.getElementById('popup');
+    const flipSound = document.getElementById('flip-sound');
+
+    function flipBook(toNext) {
+      flipSound.currentTime = 0;
+      flipSound.play();
+
+      if (toNext) {
+        book.classList.add('flipped');
+        setTimeout(() => {
+          popup.classList.add('show');
+        }, 1000);
+      } else {
+        book.classList.remove('flipped');
+        popup.classList.remove('show');
+      }
     }
   </script>
 
