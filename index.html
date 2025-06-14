@@ -2,217 +2,154 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>For Busayomi 💖</title>
+  <title>For Busayomi 💗</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      height: 100vh;
-      background: linear-gradient(to bottom right, #ffe0f0, #fff0f5);
+      background-color: #fff0f5;
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
+      height: 100vh;
       overflow: hidden;
     }
 
     .book {
-      width: 90vw;
-      max-width: 600px;
-      height: 80vh;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      width: 600px;
+      height: 300px;
       position: relative;
-      perspective: 1000px;
+      perspective: 2000px;
     }
 
     .page {
-      position: absolute;
       width: 100%;
       height: 100%;
-      padding: 40px 20px;
-      background: #fff;
-      color: #a3005b;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-      font-size: 1.2em;
+      background-color: #fff;
+      border: 2px solid #f8c6d8;
       border-radius: 10px;
-      backface-visibility: hidden;
-      transition: transform 0.8s ease;
-    }
-
-    #front {
-      background-color: #fff0f8;
-      z-index: 2;
-    }
-
-    #back {
-      background-color: #ffeaf4;
-      transform: rotateY(180deg);
-      z-index: 1;
-    }
-
-    .book.flipped #front {
-      transform: rotateY(-180deg);
-    }
-
-    .book.flipped #back {
-      transform: rotateY(0);
-      z-index: 3;
-    }
-
-    .nav-btn {
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      padding: 20px;
+      box-sizing: border-box;
       position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #ff69b4;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      font-size: 1em;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      transition: transform 1s;
     }
 
-    .nav-btn:hover {
-      background-color: #e0559e;
-    }
-
-    .popup {
-      position: fixed;
-      top: 28%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: #fff5fb;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    .text {
+      font-size: 1.1em;
+      color: #e91e63;
       text-align: center;
-      display: none;
-      z-index: 999;
-      font-size: 1.2em;
+      line-height: 1.5;
     }
 
-    .popup.show {
-      display: block;
-      animation: pop 0.5s ease-out;
-    }
+    .page-1 { z-index: 3; transform: rotateY(0deg); }
+    .page-2 { z-index: 2; transform: rotateY(180deg); }
+    .page-3 { z-index: 1; transform: rotateY(180deg); }
 
-    @keyframes pop {
-      0% {
-        transform: translate(-50%, -50%) scale(0.8);
-        opacity: 0;
-      }
-      100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
-      }
+    .book.flip-1 .page-1 { transform: rotateY(-180deg); }
+    .book.flip-1 .page-2 { transform: rotateY(0deg); }
+
+    .book.flip-2 .page-2 { transform: rotateY(-180deg); }
+    .book.flip-2 .page-3 { transform: rotateY(0deg); }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #ff80ab;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
     }
 
     .final-note {
       margin-top: 20px;
-      font-size: 1em;
+      font-size: 0.95em;
       color: #444;
-      font-style: italic;
-      animation: fadeIn 2s ease-in;
+      text-align: center;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    /* Animated flowers */
+    .flower {
+      position: fixed;
+      top: -50px;
+      font-size: 24px;
+      animation: fall linear infinite;
+      pointer-events: none;
+      z-index: 100;
     }
 
-    audio {
-      display: none;
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="book" id="book">
-    <div class="page" id="front">
-      <h2>Busayomi ❤️🙈</h2>
-      <p>I love you so so much, but your head just dey touch ground sometimes 😂😂</p>
-      <button class="nav-btn" onclick="flipBook(true)">Flip to Next</button>
+  <div class="book" id="storybook">
+    <div class="page page-1">
+      <div class="text">
+        Busayomi ❤️🙈 <br />
+        I love you so so much but your head just do touch ground sometimes 😂😂
+      </div>
     </div>
-
-    <div class="page" id="back">
-      <h2>One more thing ❤️</h2>
-      <p>But that your head wey shit ground 🙈 nah me go help u fix am — no worry, once I get money: wig, bag, iPad — anything you want, I go get am for you 💝💼📱</p>
-      <div class="final-note">I know you are leaving this page soon... please don’t leave me 🥺❤️</div>
-      <button class="nav-btn" onclick="flipBook(false)">Flip Back</button>
+    <div class="page page-2">
+      <div class="text">
+        But that your head wey shit ground 🙈 nah me go help u fix am 💁‍♂️<br />
+        No worry — once I get money, wig, bag, iPad — anything you want I will get it for you! 💼🎁📱❤️
+      </div>
+    </div>
+    <div class="page page-3">
+      <div class="text">
+        You’re not just my person, you’re my peace, my gist partner, my wahala and my joy 🥹❤️<br />
+        This love no be joke — I go hold am tight like say na gold 🥰💖<br />
+        Thank you for being sweet, stubborn, and mine 😘🌹
+      </div>
     </div>
   </div>
 
-  <div class="popup" id="popup">
-    🎉 Surprise! You’re my favorite headache and my sweetest peace. Love you Busayomi ❤️😘🙈
+  <button onclick="flipPage()">📖 Flip Page</button>
+
+  <div class="final-note">
+    I know you are leaving this page soon... please don’t leave me 🥺❤️
   </div>
-
-  <audio autoplay loop id="bg-music">
-    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3" />
-  </audio>
-
-  <audio id="flip-sound">
-    <source src="https://assets.mixkit.co/active_storage/sfx/2046/2046-preview.mp3" type="audio/mp3">
-  </audio>
 
   <script>
-    const book = document.getElementById('book');
-    const popup = document.getElementById('popup');
-    const flipSound = document.getElementById('flip-sound');
-
-    function flipBook(toNext) {
-      flipSound.currentTime = 0;
-      flipSound.play();
-
-      if (toNext) {
-        book.classList.add('flipped');
-        setTimeout(() => {
-          popup.classList.add('show');
-        }, 1000);
+    let flipState = 0;
+    function flipPage() {
+      const book = document.getElementById('storybook');
+      flipState++;
+      if (flipState === 1) {
+        book.className = "book flip-1";
+      } else if (flipState === 2) {
+        book.className = "book flip-2";
       } else {
-        book.classList.remove('flipped');
-        popup.classList.remove('show');
-        
+        book.className = "book";
+        flipState = 0;
       }
     }
+
+    // Create animated flowers
+    function createFlower() {
+      const flower = document.createElement("div");
+      flower.classList.add("flower");
+      flower.style.left = Math.random() * 100 + "vw";
+      flower.style.animationDuration = (Math.random() * 3 + 2) + "s";
+      flower.textContent = "🌸";
+      document.body.appendChild(flower);
+
+      setTimeout(() => flower.remove(), 5000);
+    }
+
+    setInterval(createFlower, 500);
   </script>
 
 </body>
 </html>
-<script>
-  const popup = document.getElementById("popup");
-  let secondFlipShown = false;
-
-  // Watch for the second page (back of the card)
-  document.querySelector('.card').addEventListener('click', () => {
-    // Toggle class, wait for second flip
-    secondFlipShown = !secondFlipShown;
-
-    if (secondFlipShown) {
-      setTimeout(() => {
-        showPopup();
-        setInterval(() => {
-          showPopup();
-        }, 11000); // repeat every 11 seconds (7s wait + 4s display)
-      }, 7000); // first show after 7 seconds
-    }
-  });
-
-  function showPopup() {
-    popup.style.display = "block";
-    setTimeout(() => {
-      popup.style.display = "none";
-    }, 4000); // hide after 4 seconds
-  }
-</script>
