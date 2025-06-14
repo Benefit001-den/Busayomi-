@@ -183,9 +183,36 @@
       } else {
         book.classList.remove('flipped');
         popup.classList.remove('show');
+        
       }
     }
   </script>
 
 </body>
 </html>
+<script>
+  const popup = document.getElementById("popup");
+  let secondFlipShown = false;
+
+  // Watch for the second page (back of the card)
+  document.querySelector('.card').addEventListener('click', () => {
+    // Toggle class, wait for second flip
+    secondFlipShown = !secondFlipShown;
+
+    if (secondFlipShown) {
+      setTimeout(() => {
+        showPopup();
+        setInterval(() => {
+          showPopup();
+        }, 11000); // repeat every 11 seconds (7s wait + 4s display)
+      }, 7000); // first show after 7 seconds
+    }
+  });
+
+  function showPopup() {
+    popup.style.display = "block";
+    setTimeout(() => {
+      popup.style.display = "none";
+    }, 4000); // hide after 4 seconds
+  }
+</script>
