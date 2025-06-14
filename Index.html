@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Busayomi 💖</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to top right, #fff0f5, #ffe6f0);
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      color: #d6336c;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.8em;
+      margin-top: 60px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .button-container {
+      margin-top: 40px;
+    }
+
+    .love-button {
+      background-color: #ff66b2;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      margin: 10px;
+      font-size: 1em;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+
+    .love-button:hover {
+      transform: scale(1.05);
+    }
+
+    .message {
+      display: none;
+      margin-top: 20px;
+      font-size: 1.1em;
+      color: #a3005b;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0); }
+    }
+
+    .heart, .flower {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      background-repeat: no-repeat;
+      animation: fall 10s linear infinite;
+      pointer-events: none;
+    }
+
+    .heart {
+      background-image: url('https://i.imgur.com/JMlwT0z.png');
+    }
+
+    .flower {
+      background-image: url('https://i.imgur.com/z6RgB5T.png');
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-100px); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Busayomi 💫</h1>
+
+  <div class="button-container">
+    <button class="love-button" onclick="showMessage('msg1')">Tap me 💖</button>
+    <button class="love-button" onclick="showMessage('msg2')">Tap the message 😆</button>
+  </div>
+
+  <p id="msg1" class="message">
+    I love you so so much, but your head just dey touch ground sometimes 😂😂
+  </p>
+
+  <p id="msg2" class="message">
+    But that your head wey shit ground nah me go help u fix am — no worry, once I get money: wig, bag, iPad — anything you want, I go get am for you 💕
+  </p>
+
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3" />
+  </audio>
+
+  <script>
+    function showMessage(id) {
+      document.getElementById(id).style.display = "block";
+    }
+
+    // Add hearts and flowers
+    for (let i = 0; i < 30; i++) {
+      const el = document.createElement("div");
+      el.className = Math.random() > 0.5 ? "heart" : "flower";
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.animationDuration = (6 + Math.random() * 5) + "s";
+      document.body.appendChild(el);
+    }
+  </script>
+</body>
+</html>
